@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">    
+    <title></title>
+    
+	<script type='text/javascript' src='http://code.jquery.com/jquery-1.6.2.js'></script>
+    <script type="text/javascript" src="../js/MgnlRestUtils.js"></script>
+	<script type='text/javascript'>
+//		$(window).load(function(){
+//			$("button").click(function() {
+//			    $("#picture").click();
+//			})
+//		});
+
+
+        $( document ).ready(function(){
+
+            $("#pic").click(function(e) {
+                $("#picture").click();
+                e.preventDefault();
+            });
+
+            $("#form").submit(function(e){
+                var formObj = $(this);
+                var formURL = formObj.attr("action");
+                e.preventDefault();
+                _(formObj).encodeForm().addPicture($('#picture').prop('files'),function(image,context){
+                       createNodesWithImagePublish(formURL,image,context);
+                });
+
+
+            });
+
+
+
+        });
+
+
+
+
+	</script>
+	<style type='text/css'>
+		input#picture{position:absolute; top:-100px;}
+	</style>
+</head>	
+<body>
+	<form name="form" id="form" action="http://localhost:8080/.rest/nodes/v1/selfies/selfies">
+		<div>
+			<label>Name:</label>
+			<input type="text" name="name">
+		</div>	
+		<div>
+			<label>Company:</label>
+			<input type="text" name="company">
+		</div>
+		<div>
+			<label>Favorite CMS:</label>
+			<input type="text" name="favoriteCMS">
+		</div>
+		<div>
+			<label>Email:</label>
+			<input type="text" name="email">
+		</div>
+		<div>		
+			<input id="picture" name="picture" type="file" accept="image/*" capture="camera">
+			<button id="pic">Take your picture</button>
+		</div>	
+		<div>
+			<input type="submit" value="Submit">
+		</div>
+	</form>
+	
+
+</body>
+</html>
